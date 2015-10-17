@@ -1,0 +1,10 @@
+<manifest
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		package="org.glimpseframework.android">
+
+	<application
+			android:allowBackup="true"
+			android:label="@string/lib_name">
+	</application>
+
+</manifest>

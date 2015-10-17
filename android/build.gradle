@@ -1,0 +1,86 @@
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+apply plugin: 'maven'
+
+def groupId = "org.glimpseframework"
+def artifactId = "glimpse-framework-android"
+def version = "0.1-SNAPSHOT"
+
+def releaseDir = "${buildDir}/release/${version}"
+
+android {
+	compileSdkVersion 23
+	buildToolsVersion "23.0.1"
+
+	defaultConfig {
+		minSdkVersion 18
+		targetSdkVersion 23
+		versionCode 1
+		versionName version
+	}
+
+	buildTypes {
+		debug {
+			debuggable true
+		}
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			debuggable false
+		}
+	}
+
+	repositories {
+		jcenter()
+	}
+
+	lintOptions {
+		disable 'AllowBackup'
+	}
+}
+
+task checkstyleMain(type: Checkstyle) {
+	configFile = new File("../config/checkstyle", "checkstyle.xml")
+	source 'src/main'
+	include '**/*.java'
+	exclude '**/gen/**'
+	classpath = files()
+	ignoreFailures false
+}
+
+project.tasks.check.dependsOn(checkstyleMain)
+
+task javaDocs(type: Javadoc) {
+	source = android.sourceSets.main.java.srcDirs
+	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javaDocsJar(type: Jar, dependsOn: javaDocs) {
+	classifier = 'javadoc'
+	from javaDocs.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from android.sourceSets.main.java.srcDirs
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		pom.groupId = groupId
+		pom.artifactId = artifactId
+		pom.version = version
+		repository(url: "file://${releaseDir}")
+	}
+}
+
+artifacts {
+	archives sourcesJar
+	archives javaDocsJar
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+
+	compile 'org.glimpseframework:glimpse-framework-api:0.1-SNAPSHOT'
+}
