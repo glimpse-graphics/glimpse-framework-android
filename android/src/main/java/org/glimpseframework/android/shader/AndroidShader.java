@@ -41,6 +41,10 @@ public class AndroidShader implements Shader {
 		}
 	}
 
+	void setParameters(Set<Parameter> parameters) {
+		this.parameters = new HashSet<Parameter>(parameters);
+	}
+
 	@Override
 	public Set<Parameter> getParameters() {
 		return new HashSet<Parameter>(parameters);

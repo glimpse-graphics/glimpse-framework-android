@@ -7,7 +7,9 @@ public class AndroidShaderProgramBuilder extends ShaderProgramBuilder<AndroidSha
 
 	@Override
 	public ShaderProgramBuilder setSource(Shader.Type shaderType, String source) {
-		addShader(new AndroidShader(shaderType, source));
+		AndroidShader shader = new AndroidShader(shaderType, source);
+		shader.setParameters(parseParameters(source));
+		addShader(shader);
 		return this;
 	}
 
