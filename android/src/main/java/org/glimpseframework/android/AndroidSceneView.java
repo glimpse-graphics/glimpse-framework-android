@@ -14,6 +14,9 @@ public class AndroidSceneView extends GLSurfaceView {
 	}
 
 	private void init(Context context) {
+		if (isInEditMode()) {
+			return;
+		}
 		if (isGLES20Supported(context)) {
 			initGLES();
 		} else {
@@ -29,7 +32,7 @@ public class AndroidSceneView extends GLSurfaceView {
 	private void initGLES() {
 		setZOrderOnTop(true);
 		setEGLContextClientVersion(2);
-		setEGLConfigChooser(8, 8, 8, 8, 0, 0);
+		setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 	}
 
