@@ -30,8 +30,10 @@ public class AndroidShaderParameterAdapter extends ShaderParameterAdapter {
 			default:
 				elementType = 0;
 		}
-		GLES20.glVertexAttribPointer(
-				shaderProgram.getAttributeLocation(parameterName), vectorSize, elementType, normalized, stride, buffer);
+		buffer.rewind();
+		int attributeLocation = shaderProgram.getAttributeLocation(parameterName);
+		GLES20.glEnableVertexAttribArray(attributeLocation);
+		GLES20.glVertexAttribPointer(attributeLocation, vectorSize, elementType, normalized, stride, buffer);
 	}
 
 	@Override
