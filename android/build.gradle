@@ -83,4 +83,5 @@ dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	compile 'org.glimpseframework:glimpse-framework-api:0.1-SNAPSHOT'
+	compile 'org.slf4j:slf4j-android:1.7.10'
 }
