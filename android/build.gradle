@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 def groupId = "org.glimpseframework"
 def artifactId = "glimpse-framework-android"
-def version = "0.1"
+def version = "0.2-SNAPSHOT"
 
 def releaseDir = "${buildDir}/release/${version}"
 
@@ -15,7 +15,7 @@ android {
 	defaultConfig {
 		minSdkVersion 18
 		targetSdkVersion 23
-		versionCode 1
+		versionCode 2
 		versionName version
 	}
 
