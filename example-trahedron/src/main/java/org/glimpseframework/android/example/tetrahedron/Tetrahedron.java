@@ -1,5 +1,6 @@
 package org.glimpseframework.android.example.tetrahedron;
 
+import android.support.annotation.NonNull;
 import java.nio.FloatBuffer;
 import org.glimpseframework.api.annotations.Attribute;
 import org.glimpseframework.api.models.Model;
@@ -7,19 +8,27 @@ import org.glimpseframework.api.primitives.Point;
 import org.glimpseframework.api.primitives.vbo.FloatVBO;
 import org.glimpseframework.api.shader.ShaderProgram;
 
-public class Tetrahedron implements Model {
+/**
+ * Tetrahedron model.
+ * @author Slawomir Czerwinski
+ */
+public final class Tetrahedron implements Model {
 
-	public Tetrahedron(ShaderProgram shaderProgram) {
+	/**
+	 * Creates a tetrahedron model.
+	 * @param shaderProgram shader program used to render this model
+	 */
+	public Tetrahedron(@NonNull ShaderProgram shaderProgram) {
 		this.shaderProgram = shaderProgram;
-		initVertices();
+		vertices = new FloatVBO(initVertices(), 3);
 	}
 
-	private void initVertices() {
+	private float[] initVertices() {
 		FloatBuffer buffer = FloatBuffer.allocate(FACES.length * 3);
 		for (int vertex : FACES) {
 			buffer.put(VERTICES[vertex].get3f());
 		}
-		vertices = new FloatVBO(buffer.array(), 3);
+		return buffer.array();
 	}
 
 	@Override
@@ -37,8 +46,11 @@ public class Tetrahedron implements Model {
 	};
 	private static final int[] FACES = { 0, 1, 2, 1, 2, 3, 2, 3, 0, 3, 0, 1 };
 
-	private ShaderProgram shaderProgram;
+	private final ShaderProgram shaderProgram;
 
+	/**
+	 * VBO containing positions of vertices to be rendered.
+	 */
 	@Attribute(name = "a_VertexPosition")
-	private FloatVBO vertices;
+	private final FloatVBO vertices;
 }
