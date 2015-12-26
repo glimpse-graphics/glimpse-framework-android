@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 def groupId = "org.glimpseframework"
 def artifactId = "glimpse-framework-android"
-def version = "0.1-SNAPSHOT"
+def version = "0.1"
 
 def releaseDir = "${buildDir}/release/${version}"
 
@@ -92,6 +92,6 @@ dependencies {
 	compile 'org.glimpseframework:glimpse-framework-api:0.1'
 	compile 'org.slf4j:slf4j-android:1.7.10'
 
-	javadocDependencies 'org.glimpseframework:glimpse-framework:0.1'
+	javadocDependencies 'com.android.support:support-annotations:23.0.1'
 	javadocDependencies 'org.glimpseframework:glimpse-framework-api:0.1'
 }
