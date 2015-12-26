@@ -4,11 +4,20 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.opengl.GLSurfaceView;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 
-public class AndroidSceneView extends GLSurfaceView {
+/**
+ * GlimpseFramework scene view.
+ * @author Slawomir Czerwinski
+ */
+public class GlimpseView extends GLSurfaceView {
 
-	public AndroidSceneView(Context context) {
+	/**
+	 * Creates a new GlimpseFramework scene view.
+	 * @param context Android context
+	 */
+	public GlimpseView(Context context) {
 		super(context);
 		init(context);
 	}
@@ -36,12 +45,21 @@ public class AndroidSceneView extends GLSurfaceView {
 		getHolder().setFormat(PixelFormat.TRANSLUCENT);
 	}
 
-	public AndroidSceneView(Context context, AttributeSet attrs) {
+	/**
+	 * Creates a new GlimpseFramework scene view.
+	 * @param context Android context
+	 * @param attrs attributes from XML layout resource file
+	 */
+	public GlimpseView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
 	}
 
-	public void setScene(AndroidScene scene) {
+	/**
+	 * Sets scene to be rendered in the view.
+	 * @param scene Android scene
+	 */
+	public void setScene(@NonNull AndroidScene scene) {
 		setRenderer(scene);
 	}
 }

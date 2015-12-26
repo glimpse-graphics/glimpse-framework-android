@@ -1,15 +1,24 @@
 package org.glimpseframework.android.shader.parameters.converters;
 
 import android.opengl.GLES20;
+import android.support.annotation.NonNull;
 import java.nio.Buffer;
 import org.glimpseframework.api.primitives.vbo.VBO;
 import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.parameters.converters.InvalidNumberOfValuesException;
 import org.glimpseframework.api.shader.parameters.converters.ShaderParameterAdapter;
 
+/**
+ * Android implementation of OpenGL shader parameters adapter
+ * @author Slawomir Czerwinski
+ */
 public class AndroidShaderParameterAdapter extends ShaderParameterAdapter {
 
-	public void setShaderProgram(ShaderProgram shaderProgram) {
+	/**
+	 * Sets shader program used by the adapter.
+	 * @param shaderProgram shader program
+	 */
+	public void setShaderProgram(@NonNull ShaderProgram shaderProgram) {
 		this.shaderProgram = shaderProgram;
 	}
 

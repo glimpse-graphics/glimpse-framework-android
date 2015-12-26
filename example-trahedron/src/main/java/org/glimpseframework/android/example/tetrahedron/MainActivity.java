@@ -2,7 +2,7 @@ package org.glimpseframework.android.example.tetrahedron;
 
 import android.app.Activity;
 import android.os.Bundle;
-import org.glimpseframework.android.AndroidSceneView;
+import org.glimpseframework.android.GlimpseView;
 
 public class MainActivity extends Activity {
 
@@ -10,7 +10,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		view = (AndroidSceneView) findViewById(R.id.android_scene_view);
+		view = (GlimpseView) findViewById(R.id.android_scene_view);
 		view.setScene(new TetrahedronScene(this));
 	}
 
@@ -26,5 +26,5 @@ public class MainActivity extends Activity {
 		view.onPause();
 	}
 
-	private AndroidSceneView view;
+	private GlimpseView view;
 }

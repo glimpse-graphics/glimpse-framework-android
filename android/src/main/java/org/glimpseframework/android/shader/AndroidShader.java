@@ -9,9 +9,9 @@ import org.glimpseframework.api.shader.Shader;
 import org.glimpseframework.api.shader.ShaderCompileException;
 import org.glimpseframework.api.shader.parameters.Parameter;
 
-public class AndroidShader implements Shader {
+class AndroidShader implements Shader {
 
-	public AndroidShader(Type type, String source) {
+	AndroidShader(Type type, String source) {
 		this.type = type;
 		this.source = source;
 	}

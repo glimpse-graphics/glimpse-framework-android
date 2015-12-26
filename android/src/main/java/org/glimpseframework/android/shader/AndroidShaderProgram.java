@@ -10,9 +10,9 @@ import org.glimpseframework.api.shader.ShaderProgram;
 import org.glimpseframework.api.shader.ShaderProgramLinkException;
 import org.glimpseframework.api.shader.parameters.Parameter;
 
-public class AndroidShaderProgram implements ShaderProgram {
+class AndroidShaderProgram implements ShaderProgram {
 
-	public AndroidShaderProgram(AndroidShader... shaders) {
+	AndroidShaderProgram(AndroidShader... shaders) {
 		for (AndroidShader shader : shaders) {
 			this.shaders.put(shader.getType(), shader);
 		}
