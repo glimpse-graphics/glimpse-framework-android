@@ -4,7 +4,7 @@ apply plugin: 'maven'
 
 def groupId = "org.glimpseframework"
 def artifactId = "glimpse-framework-android"
-def version = "0.1-SNAPSHOT"
+def version = "0.1"
 
 def releaseDir = "${buildDir}/release/${version}"
 
