@@ -59,7 +59,7 @@
 		</module>
 
 		<module name="ParameterNumber">
-			<property name="max" value="4"/>
+			<property name="max" value="6"/>
 		</module>
 
 		<module name="EmptyForIteratorPad"/>

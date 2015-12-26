@@ -50,9 +50,14 @@ task checkstyleMain(type: Checkstyle) {
 
 project.tasks.check.dependsOn(checkstyleMain)
 
+configurations {
+	javadocDependencies
+}
+
 task javaDocs(type: Javadoc) {
 	source = android.sourceSets.main.java.srcDirs
 	classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+	classpath += configurations.javadocDependencies
 }
 
 task javaDocsJar(type: Jar, dependsOn: javaDocs) {
@@ -85,4 +90,7 @@ dependencies {
 	compile 'org.glimpseframework:glimpse-framework:0.1'
 	compile 'org.glimpseframework:glimpse-framework-api:0.1'
 	compile 'org.slf4j:slf4j-android:1.7.10'
+
+	javadocDependencies 'org.glimpseframework:glimpse-framework:0.1'
+	javadocDependencies 'org.glimpseframework:glimpse-framework-api:0.1'
 }

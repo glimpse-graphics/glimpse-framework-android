@@ -54,7 +54,8 @@ public class AndroidShaderParameterAdapter extends ShaderParameterAdapter {
 				GLES20.glUniform3i(shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2]);
 				break;
 			case 4:
-				GLES20.glUniform4i(shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2], values[3]);
+				GLES20.glUniform4i(
+						shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2], values[3]);
 				break;
 			default:
 				throwInvalidNumberOfValuesException(values.length);
@@ -78,7 +79,8 @@ public class AndroidShaderParameterAdapter extends ShaderParameterAdapter {
 				GLES20.glUniform3f(shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2]);
 				break;
 			case 4:
-				GLES20.glUniform4f(shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2], values[3]);
+				GLES20.glUniform4f(
+						shaderProgram.getUniformLocation(parameterName), values[0], values[1], values[2], values[3]);
 				break;
 			default:
 				throwInvalidNumberOfValuesException(values.length);
