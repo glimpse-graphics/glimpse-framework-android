@@ -12,6 +12,7 @@ import glimpse.cameras.targeted
 import glimpse.degrees
 import glimpse.gles.BlendFactor
 import glimpse.gles.DepthTestFunction
+import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
@@ -48,12 +49,13 @@ class MainActivity : AppCompatActivity() {
 
 	var material: Material = plasticMaterial
 
+	val lights = listOf(Light.DirectionLight(Vector(-1f, -1f, 0f)))
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		relativeLayout {
 			glimpseView = glimpseView {
 				onInit {
-					Plastic.init(this)
 					clearColor = Color.BLACK transparent 0f
 					clearDepth = 1f
 					isDepthTest = true
@@ -69,10 +71,9 @@ class MainActivity : AppCompatActivity() {
 				onRender {
 					clearColorBuffer()
 					clearDepthBuffer()
-					material.render(model, camera)
+					material.render(model, camera, lights)
 				}
 				onDispose {
-					Plastic.dispose()
 				}
 			}.lparams(width = matchParent, height = matchParent)
 		}

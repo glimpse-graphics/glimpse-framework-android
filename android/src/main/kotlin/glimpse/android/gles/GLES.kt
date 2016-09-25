@@ -127,16 +127,24 @@ object GLES : GLES {
 		GLES20.glUniform1f(location.value, float)
 	}
 
+	override fun uniformFloats(location: UniformLocation, floats: FloatArray) {
+		GLES20.glUniform1fv(location.value, floats.size, floats, 0)
+	}
+
 	override fun uniformInt(location: UniformLocation, int: Int) {
 		GLES20.glUniform1i(location.value, int)
+	}
+
+	override fun uniformInts(location: UniformLocation, ints: IntArray) {
+		GLES20.glUniform1iv(location.value, ints.size, ints, 0)
 	}
 
 	override fun uniformMatrix16f(location: UniformLocation, _16f: Array<Float>) {
 		GLES20.glUniformMatrix4fv(location.value, 1, false, _16f.toFloatArray(), 0)
 	}
 
-	override fun uniform4f(location: UniformLocation, _4f: Array<Float>) {
-		GLES20.glUniform4fv(location.value, 1, _4f.toFloatArray(), 0)
+	override fun uniform4f(location: UniformLocation, _4f: Array<Float>, count: Int) {
+		GLES20.glUniform4fv(location.value, count, _4f.toFloatArray(), 0)
 	}
 
 	override fun createAttributeFloatArray(location: AttributeLocation, buffer: FloatBuffer, vectorSize: Int) =

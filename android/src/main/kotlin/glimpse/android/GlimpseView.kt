@@ -7,6 +7,7 @@ import android.opengl.GLSurfaceView
 import android.view.ViewManager
 import glimpse.gles.GLES
 import glimpse.gles.Viewport
+import glimpse.gles.delegates.GLESDelegate
 import org.jetbrains.anko.custom.ankoView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -16,7 +17,7 @@ import javax.microedition.khronos.opengles.GL10
  */
 class GlimpseView(context: Context) : GLSurfaceView(context) {
 
-	private val gles: GLES = glimpse.android.gles.GLES
+	private val gles: GLES by GLESDelegate
 
 	private var init: GLES.() -> Unit = {}
 	private var reshape: GLES.(viewport: Viewport) -> Unit = {}
@@ -76,6 +77,7 @@ class GlimpseView(context: Context) : GLSurfaceView(context) {
 	private inner class Renderer : GLSurfaceView.Renderer {
 
 		override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
+			GLESDelegate(glimpse.android.gles.GLES)
 			gles.init()
 		}
 

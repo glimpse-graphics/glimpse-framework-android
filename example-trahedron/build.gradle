@@ -45,5 +45,5 @@ dependencies {
 	compile 'org.jetbrains.anko:anko-support-v4:0.9'
 	compile 'org.jetbrains.anko:anko-appcompat-v7:0.9'
 
-	compile 'org.glimpseframework:glimpse-framework-materials:0.2'
+	compile "org.glimpseframework:glimpse-framework-materials:${glimpse_version}"
 }
