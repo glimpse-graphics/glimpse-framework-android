@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import glimpse.Color
 import glimpse.Vector
 import glimpse.android.GlimpseView
@@ -13,6 +14,7 @@ import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
 import glimpse.degrees
+import glimpse.gles.Disposables
 import glimpse.lights.Light
 import glimpse.materials.Material
 import glimpse.materials.Plastic
@@ -26,6 +28,8 @@ import org.jetbrains.anko.relativeLayout
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+	val LOG_TAG = "Glimpse Preview"
 
 	lateinit var glimpseView: GlimpseView
 
@@ -62,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 		relativeLayout {
 			glimpseView = glimpseView {
 				onInit {
+					Log.d(LOG_TAG, "Initializing")
 					clearColor = Color.BLACK transparent 0f
 					isDepthTest = true
 					textures[Textured.TextureType.AMBIENT] = assets.open("ambient.png").readTexture { name = "ambient.png" with mipmap }
@@ -69,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 					textures[Textured.TextureType.SPECULAR] = assets.open("specular.png").readTexture { name = "specular.png" with mipmap }
 				}
 				onResize { v ->
+					Log.d(LOG_TAG, "Resizing")
 					viewport = v
 					aspect = viewport.aspect
 				}
@@ -78,13 +84,16 @@ class MainActivity : AppCompatActivity() {
 					try {
 						material.render(model, camera, lights)
 					} catch (e : Exception) {
-						Log.e("GLIMPSE", "Rendering error", e)
+						Log.e(LOG_TAG, "Rendering error", e)
+						finish()
 					}
 				}
 				onDispose {
+					Log.d(LOG_TAG, "Disposing")
 				}
 			}.lparams(width = matchParent, height = matchParent)
 		}
+		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,6 +109,11 @@ class MainActivity : AppCompatActivity() {
 	override fun onPause() {
 		super.onPause()
 		glimpseView.onPause()
+	}
+
+	override fun onDestroy() {
+		super.onDestroy()
+		Disposables.disposeAll()
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem?): Boolean = when(item?.itemId) {
