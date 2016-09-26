@@ -19,7 +19,6 @@ buildscript {
 
 subprojects {
 	apply plugin: 'org.jetbrains.dokka'
-	apply plugin: 'jacoco'
 
 	tasks.withType(JavaCompile) {
 		sourceCompatibility = 1.6
@@ -29,13 +28,4 @@ subprojects {
 	repositories {
 		jcenter()
 	}
-
-//	jacocoTestReport {
-//		reports {
-//			xml.enabled = true
-//			html.enabled = true
-//		}
-//	}
-
-//	check.dependsOn jacocoTestReport
 }
