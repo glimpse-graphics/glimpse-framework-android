@@ -17,13 +17,6 @@ buildscript {
 	}
 }
 
-allprojects  {
-	apply plugin: 'maven'
-
-	group = 'org.glimpseframework'
-	version = "${glimpse_version}"
-}
-
 subprojects {
 	apply plugin: 'org.jetbrains.dokka'
 	apply plugin: 'jacoco'

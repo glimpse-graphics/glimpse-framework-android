@@ -2,6 +2,7 @@ description = 'Glimpse Framework Android Implementation'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'maven'
 
 android {
 	compileSdkVersion 23
@@ -40,13 +41,43 @@ android {
 	}
 }
 
+dokka {
+	moduleName = 'Glimpse Framework Android Implementation'
+	outputFormat = 'javadoc'
+}
+
+def releaseDir = "${buildDir}/release/${version}"
+
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from android.sourceSets.main.java.srcDirs
+}
+
+task dokkaJar(type: Jar, dependsOn: project.dokka) {
+	classifier = 'javadoc'
+	from dokka
+}
+
+artifacts {
+	archives sourcesJar
+	archives dokkaJar
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		pom.groupId = 'org.glimpseframework'
+		pom.artifactId = 'glimpse-framework-android'
+		pom.version = "${glimpse_version}"
+
+		repository(url: "file://${releaseDir}")
+	}
+}
+
 dependencies {
 	compile fileTree(dir: 'libs', include: ['*.jar'])
 
 	compile "org.glimpseframework:glimpse-framework-api:${glimpse_version}"
-
 	compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
-
 	compile 'org.jetbrains.anko:anko-sdk23:0.9'
 
 	testCompile "io.kotlintest:kotlintest:${kotlintest_version}"
