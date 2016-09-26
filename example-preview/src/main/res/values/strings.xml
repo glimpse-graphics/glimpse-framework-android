@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Glimpse Tetrahedron Example</string>
+
+	<string name="menu_model_tetrahedron">Tetrahedron</string>
+	<string name="menu_model_cube">Cube</string>
+	<string name="menu_model_sphere">Sphere</string>
+
+	<string name="menu_material_plastic">Plastic</string>
+	<string name="menu_material_textured">Textured</string>
+
+</resources>

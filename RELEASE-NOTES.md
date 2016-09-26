@@ -1,5 +1,16 @@
 # GlimpseFramework for Android Release Notes
 
+## Version 0.3
+
+* **Release date:** Sep 26, 2016
+* **Git tag:** glimpse-framework-android-0.3
+
+Android implementation of Glimpse Framework 0.3.
+
+## Version 0.2
+
+Version skipped due to a serious Glimpse Framework API bug.
+
 ## Version 0.1
 
 * **Release date:** Dec 26, 2015
