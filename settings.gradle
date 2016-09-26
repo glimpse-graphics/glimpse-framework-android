@@ -1,1 +1,1 @@
-include ':android', ':example-trahedron'
+include ':android', ':example-preview'
