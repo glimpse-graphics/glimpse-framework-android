@@ -91,5 +91,8 @@ class GlimpseView(context: Context) : GLSurfaceView(context) {
 	}
 }
 
+/**
+ * Returns a Glimpse Framework view initialized with [init] function.
+ */
 inline fun ViewManager.glimpseView(theme: Int = 0, init: GlimpseView.() -> Unit): GlimpseView =
 		ankoView({ ctx: Context -> GlimpseView(ctx) }, theme) { init() }
