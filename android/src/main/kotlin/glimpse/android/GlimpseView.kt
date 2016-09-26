@@ -27,7 +27,7 @@ class GlimpseView(context: Context) : GLSurfaceView(context) {
 	init {
 		if (!isInEditMode) {
 			require(isGLES20Supported()) { "OpenGL ES 2.0 not supported" }
-			initGLES();
+			initGLES()
 		}
 	}
 
@@ -53,8 +53,6 @@ class GlimpseView(context: Context) : GLSurfaceView(context) {
 
 	/**
 	 * GL resize lambda.
-	 *
-	 * @param viewport Rendering viewport.
 	 */
 	fun onResize(reshape: GLES.(viewport: Viewport) -> Unit) {
 		this.reshape = reshape
