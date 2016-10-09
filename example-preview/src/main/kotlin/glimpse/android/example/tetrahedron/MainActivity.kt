@@ -16,13 +16,14 @@ import glimpse.cameras.targeted
 import glimpse.degrees
 import glimpse.gles.Disposables
 import glimpse.lights.Light
+import glimpse.lights.directionLight
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.*
 import glimpse.textures.Texture
+import glimpse.textures.loadTexture
 import glimpse.textures.mipmap
-import glimpse.textures.readTexture
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.relativeLayout
 import java.util.*
@@ -59,7 +60,10 @@ class MainActivity : AppCompatActivity() {
 
 	var material: Material = plasticMaterial
 
-	val lights = listOf(Light.DirectionLight(Vector(-1f, -1f, 0f)))
+	val lights = listOf<Light>(
+			directionLight {
+				direction { Vector(-1f, -1f, 0f) }
+			})
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -69,9 +73,9 @@ class MainActivity : AppCompatActivity() {
 					Log.d(LOG_TAG, "Initializing")
 					clearColor = Color.BLACK transparent 0f
 					isDepthTest = true
-					textures[Textured.TextureType.AMBIENT] = assets.open("ambient.png").readTexture { name = "ambient.png" with mipmap }
-					textures[Textured.TextureType.DIFFUSE] = assets.open("diffuse.png").readTexture { name = "diffuse.png" with mipmap }
-					textures[Textured.TextureType.SPECULAR] = assets.open("specular.png").readTexture { name = "specular.png" with mipmap }
+					textures[Textured.TextureType.AMBIENT] = assets.open("ambient.png").loadTexture { name = "ambient.png" with mipmap }
+					textures[Textured.TextureType.DIFFUSE] = assets.open("diffuse.png").loadTexture { name = "diffuse.png" with mipmap }
+					textures[Textured.TextureType.SPECULAR] = assets.open("specular.png").loadTexture { name = "specular.png" with mipmap }
 				}
 				onResize { v ->
 					Log.d(LOG_TAG, "Resizing")
