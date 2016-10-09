@@ -10,6 +10,7 @@ import glimpse.Color
 import glimpse.Vector
 import glimpse.android.GlimpseView
 import glimpse.android.glimpseView
+import glimpse.android.io.asset
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
@@ -22,8 +23,6 @@ import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.*
 import glimpse.textures.Texture
-import glimpse.textures.loadTexture
-import glimpse.textures.mipmap
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.relativeLayout
 import java.util.*
@@ -73,9 +72,9 @@ class MainActivity : AppCompatActivity() {
 					Log.d(LOG_TAG, "Initializing")
 					clearColor = Color.BLACK transparent 0f
 					isDepthTest = true
-					textures[Textured.TextureType.AMBIENT] = assets.open("ambient.png").loadTexture { name = "ambient.png" with mipmap }
-					textures[Textured.TextureType.DIFFUSE] = assets.open("diffuse.png").loadTexture { name = "diffuse.png" with mipmap }
-					textures[Textured.TextureType.SPECULAR] = assets.open("specular.png").loadTexture { name = "specular.png" with mipmap }
+					textures[Textured.TextureType.AMBIENT] = asset("ambient.png").loadTexture { withMipmap() }
+					textures[Textured.TextureType.DIFFUSE] = asset("diffuse.png").loadTexture { withMipmap() }
+					textures[Textured.TextureType.SPECULAR] = asset("specular.png").loadTexture { withMipmap() }
 				}
 				onResize { v ->
 					Log.d(LOG_TAG, "Resizing")
