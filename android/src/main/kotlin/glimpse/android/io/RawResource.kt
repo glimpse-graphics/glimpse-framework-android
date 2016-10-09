@@ -9,25 +9,25 @@ import glimpse.textures.loadTexture
 import java.io.InputStream
 
 /**
- * Android asset.
+ * Android raw resource.
  *
  * @property context Android context.
- * @property name Asset name.
+ * @property id Resource ID.
  */
-class Asset(val context: Context, val name: String) {
+class RawResource(val context: Context, val id: Int) {
 
 	/**
-	 * Newly opened asset input stream.
+	 * Newly opened resource input stream.
 	 */
-	val inputStream: InputStream get() = context.assets.open(name)
+	val inputStream: InputStream get() = context.resources.openRawResource(id)
 
 	/**
-	 * Lines in the asset file.
+	 * Lines in the resource file.
 	 */
 	val lines: List<String> by lazy { inputStream.reader().readLines() }
 
 	/**
-	 * Builds three-dimensional meshes from OBJ file asset.
+	 * Builds three-dimensional meshes from OBJ file resource.
 	 */
 	fun loadObjMeshes(): List<Mesh> = lines.loadObjMeshes()
 
@@ -41,6 +41,6 @@ class Asset(val context: Context, val name: String) {
 }
 
 /**
- * Returns an Android asset with the given [name] in this [Context].
+ * Returns an Android raw resource with the given [id] in this [Context].
  */
-fun Context.asset(name: String) = Asset(this, name)
+fun Context.rawResource(id: Int) = RawResource(this, id)
