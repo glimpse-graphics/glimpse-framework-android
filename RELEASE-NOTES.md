@@ -1,5 +1,19 @@
 # GlimpseFramework for Android Release Notes
 
+## Version 0.4
+
+* **Release date:** Oct 28, 2016
+* **Git tag:** glimpse-framework-android-0.4
+
+### New features
+
+* Issue #40 – Loading OBJ from Android assets and raw resources.
+* Issue #41 – Loading textures from Android assets and raw resources.
+
+### Fixed bugs
+
+* Issue #48 – Fixed crashes after recreating activity with `GlimpseView`.
+
 ## Version 0.3
 
 * **Release date:** Sep 26, 2016
