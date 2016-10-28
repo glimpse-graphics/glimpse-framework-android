@@ -10,19 +10,19 @@ import glimpse.Color
 import glimpse.Vector
 import glimpse.android.GlimpseView
 import glimpse.android.glimpseView
+import glimpse.android.io.asset
 import glimpse.cameras.camera
 import glimpse.cameras.perspective
 import glimpse.cameras.targeted
 import glimpse.degrees
 import glimpse.gles.Disposables
 import glimpse.lights.Light
+import glimpse.lights.directionLight
 import glimpse.materials.Material
 import glimpse.materials.Plastic
 import glimpse.materials.Textured
 import glimpse.models.*
 import glimpse.textures.Texture
-import glimpse.textures.mipmap
-import glimpse.textures.readTexture
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.relativeLayout
 import java.util.*
@@ -59,9 +59,18 @@ class MainActivity : AppCompatActivity() {
 
 	var material: Material = plasticMaterial
 
-	val lights = listOf(Light.DirectionLight(Vector(-1f, -1f, 0f)))
+	val lights = listOf<Light>(
+			directionLight {
+				direction { Vector(-1f, -1f, 0f) }
+			})
+
+	var selectedModel = R.id.menu_model_tetrahedron
+	var selectedMaterial = R.id.menu_material_plastic
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		selectedModel = savedInstanceState?.getInt("selectedModel") ?: R.id.menu_model_tetrahedron
+		selectedMaterial = savedInstanceState?.getInt("selectedMaterial") ?: R.id.menu_material_plastic
+		Log.d(LOG_TAG, "$selectedModel made of $selectedMaterial")
 		super.onCreate(savedInstanceState)
 		relativeLayout {
 			glimpseView = glimpseView {
@@ -69,9 +78,9 @@ class MainActivity : AppCompatActivity() {
 					Log.d(LOG_TAG, "Initializing")
 					clearColor = Color.BLACK transparent 0f
 					isDepthTest = true
-					textures[Textured.TextureType.AMBIENT] = assets.open("ambient.png").readTexture { name = "ambient.png" with mipmap }
-					textures[Textured.TextureType.DIFFUSE] = assets.open("diffuse.png").readTexture { name = "diffuse.png" with mipmap }
-					textures[Textured.TextureType.SPECULAR] = assets.open("specular.png").readTexture { name = "specular.png" with mipmap }
+					textures[Textured.TextureType.AMBIENT] = asset("ambient.png").loadTexture { withMipmap() }
+					textures[Textured.TextureType.DIFFUSE] = asset("diffuse.png").loadTexture { withMipmap() }
+					textures[Textured.TextureType.SPECULAR] = asset("specular.png").loadTexture { withMipmap() }
 				}
 				onResize { v ->
 					Log.d(LOG_TAG, "Resizing")
@@ -98,6 +107,10 @@ class MainActivity : AppCompatActivity() {
 
 	override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 		menuInflater.inflate(R.menu.main, menu)
+		menu?.findItem(selectedModel)?.isChecked = true
+		menu?.findItem(selectedMaterial)?.isChecked = true
+		onOptionsItemSelected(menu?.findItem(selectedModel))
+		onOptionsItemSelected(menu?.findItem(selectedMaterial))
 		return true
 	}
 
@@ -111,38 +124,45 @@ class MainActivity : AppCompatActivity() {
 		glimpseView.onPause()
 	}
 
+	override fun onSaveInstanceState(outState: Bundle?) {
+		Log.d(LOG_TAG, "$selectedModel made of $selectedMaterial")
+		outState?.putInt("selectedModel", selectedModel)
+		outState?.putInt("selectedMaterial", selectedMaterial)
+		super.onSaveInstanceState(outState)
+	}
+
 	override fun onDestroy() {
 		super.onDestroy()
 		Disposables.disposeAll()
 	}
 
-	override fun onOptionsItemSelected(item: MenuItem?): Boolean = when(item?.itemId) {
-		R.id.menu_model_tetrahedron -> {
-			model = tetrahedron
-			item?.isChecked = true
-			true
-		}
-		R.id.menu_model_cube -> {
-			model = cube
-			item?.isChecked = true
-			true
-		}
-		R.id.menu_model_sphere -> {
-			model = sphere
-			item?.isChecked = true
-			true
-		}
-		R.id.menu_material_plastic -> {
-			material = plasticMaterial
-			item?.isChecked = true
-			true
-		}
-		R.id.menu_material_textured -> {
-			material = texturedMaterial
-			item?.isChecked = true
-			true
-		}
+	override fun onOptionsItemSelected(item: MenuItem?): Boolean = when(item?.groupId) {
+		R.id.menu_model -> selectModel(item!!, item.itemId)
+		R.id.menu_material -> selectMaterial(item!!, item.itemId)
 		else -> super.onOptionsItemSelected(item)
+	}
+
+	private fun selectModel(item: MenuItem, id: Int): Boolean {
+		selectedModel = id
+		item.isChecked = true
+		model = when (id) {
+			R.id.menu_model_tetrahedron -> tetrahedron
+			R.id.menu_model_cube -> cube
+			R.id.menu_model_sphere -> sphere
+			else -> mesh {}.transform {}
+		}
+		return true
+	}
+
+	private fun selectMaterial(item: MenuItem, id: Int): Boolean {
+		selectedMaterial = id
+		item.isChecked = true
+		material = when (id) {
+			R.id.menu_material_plastic -> plasticMaterial
+			R.id.menu_material_textured -> texturedMaterial
+			else -> plasticMaterial
+		}
+		return true
 	}
 
 	private fun transform(mesh: Mesh): Model = mesh.transform {
