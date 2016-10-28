@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Glimpse Tetrahedron Example</string>
+	<string name="app_name">Glimpse Preview</string>
 
 	<string name="menu_model_tetrahedron">Tetrahedron</string>
 	<string name="menu_model_cube">Cube</string>
